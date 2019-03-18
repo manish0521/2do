@@ -17,25 +17,25 @@ function init() {
     // Add event listener functions that get called whenever a user interacts
     // with the respective element.
 
-    document.querySelector('')
+    document.querySelector('#add-todo-button')
         .addEventListener('click', addTodo);
     
-    document.querySelector('')
+    document.querySelector('#remove-todo-button')
         .addEventListener('click', removeTodo);
 
-    document.querySelector('')
+    document.querySelector('#complete-todo-button')
         .addEventListener('click', completeTodo);
 
-    document.querySelector('')
+    document.querySelector('#clear-todos-button')
         .addEventListener('click', clearTodos);
 
-    document.querySelector('')
+    document.querySelector('#remove-completed-button')
         .addEventListener('click', removeCompleted);
 
-    document.querySelector('')
+    document.querySelector('#mark-uncomplete-button')
         .addEventListener('click', markUncomplete);
 
-    document.querySelector('')
+    document.querySelector('#clear-completed-button')
         .addEventListener('click', clearComplete);
 }
 
@@ -52,12 +52,17 @@ function addTodo(event) {
     event.preventDefault();
 
     // Grab value of todo input box.
-
+    const addValue = document.querySelector('#new-todo').value;
+    const addToEnd = addValue;
     // Put that value at the end of our list.
-
+    if(addValue !== '') {
+        todos.push(addToEnd);
+    }
+   
     // Update our html.
-
+    updateTodosOl();
     // Reset all input fields.
+    resetAllInputs();
 }
 
 function removeTodo(event) {
@@ -65,12 +70,22 @@ function removeTodo(event) {
     event.preventDefault();
 
     // Grab value that's in user's removal index input box.
+    const removeValue = document.querySelector('#todo-removal-index').value;
+
 
     // Remove todo at that index.
+    if(removeValue != 0) {
 
+        todos.splice(removeValue - 1 , 1);
+
+    }
+    
+    
     // Update our html.
-
+    updateTodosOl();
+   
     // Reset all input fields.
+    resetAllInputs();
 }
 
 function completeTodo(event) {
@@ -78,12 +93,19 @@ function completeTodo(event) {
     event.preventDefault();
 
     // Grab value that's in user's todo completion index input box.
+    const input = document.querySelector('#todo-compelete-index').value;
+    const index = parseFloat(input) - 1; 
 
     // Move todo at that index to the completed list.
-
-    // Update our html.
+    const removeTodoArr = todos.splice(index, 1)
+    // const removeTodo = removeTodoArr[0];
+    
+    completed.push(removeTodoArr);
+    updateCompletedOl();
+    updateTodosOl();
 
     // Reset all input fields.
+    resetAllInputs();
 }
 
 function clearTodos(event) {
@@ -91,8 +113,11 @@ function clearTodos(event) {
     event.preventDefault();
 
     // Clear all todos from the list.
+    todos.length = 0;
+
 
     // Update our html.
+    updateTodosOl();
 }
 
 function removeCompleted(event) {
@@ -100,12 +125,19 @@ function removeCompleted(event) {
     event.preventDefault();
 
     // Grab value that's in user's removal index input box.
+    let item = document.querySelector ('#completed-removal-index');
+    let index = item - 1;
 
     // Remove todo at that index.
+    completed.splice (index, 1);
+    checkMarks.pop ();
+
 
     // Update our html.
-
+    updateCompletedOl();
+    updateTodosOl();
     // Reset all input fields.
+    resetAllInputs();
 }
 
 function markUncomplete(event) {
@@ -117,8 +149,9 @@ function markUncomplete(event) {
     // Move todo at that index to the completed list.
 
     // Update our html.
-
+    updateTodosOl();
     // Reset all input fields.
+    resetAllInputs();
 }
 
 function clearComplete(event) {
@@ -126,8 +159,10 @@ function clearComplete(event) {
     event.preventDefault();
 
     // Clear all todos from the list.
+    completed.length = 0;
 
     // Update our html.
+    updateTodosOl();
 }
 
 
